@@ -19,10 +19,10 @@ class AppComponent extends LitElement {
   @property()
   iconNames = ['house', 'email', 'edit', 'settings', 'user', 'users', 'logout'];
 
-  emit() {
-    console.log('nav-item clicked');
+  emit(icon: string) {
     this.dispatchEvent(
-      new CustomEvent('buttonClick', {
+      new CustomEvent('selected', {
+        detail: icon,
         bubbles: true
       })
     );
@@ -45,7 +45,6 @@ class AppComponent extends LitElement {
     e.classList.add('selected');
     const svgChild = e.firstElementChild as HTMLElement;
     this.selectedIcon = svgChild.getAttribute('iconName') as string;
-    console.log(this.selectedIcon);
   }
 
   deselectItems() {
@@ -66,7 +65,11 @@ class AppComponent extends LitElement {
           <ul>
             ${this.iconNames.map(icon => html`
             <li class="list-item">
-              <svg-icon iconName=${icon} @click=${(e: any)=> console.log(e)}></svg-icon>
+
+              <svg-icon class=${this.selectedIcon === icon ? 'selected' : '' }
+              iconName=${icon} @click=${() =>
+                this.emit(icon)}></svg-icon>
+
             </li>
             `)}
           </ul>

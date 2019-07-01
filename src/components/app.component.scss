@@ -13,7 +13,8 @@
 
 ul {
   position: relative;
-  transform: skew(var(--skew-degree-x), var(--skew-degree-y))
+  transform: skew(var(--skew-degree-x), var(--skew-degree-y));
+  padding: 0px;
 }
 
 .list-item {
@@ -46,6 +47,7 @@ ul {
 
     &:before {
       background: var(--hover-background-color);
+      color: var(--hover-color);
       width: 1em;
       top: .6em;
       left: -1em;
@@ -53,6 +55,7 @@ ul {
 
     &:after {
       background: var(--hover-background-color);
+      color: var(--hover-color);
       width: 1em;
       bottom: -2.5em;
       left: 1em;
@@ -92,6 +95,10 @@ svg {
 .selected {
   color: var(--selectedColor);
   transform: translate(.9em, -.19em);
+}
+
+.selected:hover {
+  color: var(--hover-color);
 }
 
 // Animations
