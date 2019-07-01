@@ -4,11 +4,11 @@
   --skew-degree-y: 5deg;
   --background-color: #000;
   --color: #575757;
-  --hover-background-color: #95DEE3;//#ff6e42;
-  --hover-color: #F2552C;
+  --hover-background-color: var(--selectedColor);
+  --hover-color: white;
   --shadow-x: 2em;
   --shadow-y: 1.5em;
-  --selectedColor: rgb(255, 29, 29);
+  --selectedColor: rgb(29, 202, 255);
 }
 
 ul {
