@@ -1,4 +1,4 @@
-import { css, customElement, html, LitElement, property, unsafeCSS } from 'lit-element';
+import { css, customElement, html, LitElement, property, unsafeCSS, queryAll } from 'lit-element';
 
 const componentCSS = require('./app.component.scss');
 
@@ -10,8 +10,17 @@ class AppComponent extends LitElement {
   @property()
   title = 'Example button';
 
+  @queryAll('.list-item')
+  listItemElements!: HTMLElement[];
+
+  @property()
+  selectedIcon!: string;
+
+  @property()
+  iconNames = ['house', 'email', 'edit', 'settings', 'user', 'users', 'logout'];
+
   emit() {
-    console.log('Button clicked');
+    console.log('nav-item clicked');
     this.dispatchEvent(
       new CustomEvent('buttonClick', {
         bubbles: true
@@ -19,33 +28,47 @@ class AppComponent extends LitElement {
     );
   }
 
+  firstUpdated() {
+    this.listItemElements.forEach(e => {
+      const svgChild = e.firstElementChild as HTMLElement;
+      const icon = svgChild.getAttribute('iconName') as string;
+      icon === this.selectedIcon ? this.selectItem(e) : '';
+      e.addEventListener('click', () => {
+        this.doLoop(e);
+        this.selectItem(e);
+      });
+    });
+  }
+
+  selectItem(e: HTMLElement) {
+    this.deselectItems();
+    e.classList.add('selected');
+    const svgChild = e.firstElementChild as HTMLElement;
+    this.selectedIcon = svgChild.getAttribute('iconName') as string;
+    console.log(this.selectedIcon);
+  }
+
+  deselectItems() {
+    this.listItemElements.forEach((e: HTMLElement) => {
+      e.classList.remove('selected');
+    });
+  }
+
+  doLoop(e: HTMLElement) {
+    e.classList.add('loop');
+    setTimeout(() => {
+      e.classList.remove('loop');
+    }, 300);
+  }
+
   render() {
     return html`
           <ul>
+            ${this.iconNames.map(icon => html`
             <li class="list-item">
-              <svg-icon iconName="house"></svg-icon>
+              <svg-icon iconName=${icon} @click=${(e: any)=> console.log(e)}></svg-icon>
             </li>
-            <li class="list-item">
-              <svg-icon iconName="email"></svg-icon>
-            </li>
-            <li class="list-item">
-              <svg-icon iconName="edit"></svg-icon>
-            </li>
-            <li class="list-item">
-              <svg-icon iconName="settings"></svg-icon>
-            </li>
-            <li class="list-item">
-              <svg-icon iconName="house"></svg-icon>
-            </li>
-            <li class="list-item">
-              <svg-icon iconName="user"></svg-icon>
-            </li>
-            <li class="list-item">
-              <svg-icon iconName="users"></svg-icon>
-            </li>
-            <li class="list-item">
-              <svg-icon iconName="logout"></svg-icon>
-            </li>
+            `)}
           </ul>
 `;
   }

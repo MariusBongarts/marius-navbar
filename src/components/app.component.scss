@@ -1,11 +1,14 @@
 
 :host {
-  --skew-degree-x: 25deg;
+  --skew-degree-x: 20deg;
   --skew-degree-y: 5deg;
   --background-color: #000;
   --color: #575757;
   --hover-background-color: #95DEE3;//#ff6e42;
   --hover-color: #F2552C;
+  --shadow-x: 2em;
+  --shadow-y: 1.5em;
+  --selectedColor: rgb(255, 29, 29);
 }
 
 ul {
@@ -25,7 +28,7 @@ ul {
   position: relative;
   display: block;
   text-decoration: none;
-  box-shadow: -2em 1.5em 0 #e1e1e1;
+  box-shadow: var(--shadow-x) var(--shadow-y) 0 #e1e1e1;
   transition: all .20s linear;
   cursor: pointer;
 
@@ -82,7 +85,27 @@ ul {
   }
 }
 
-
 svg {
   margin: 10px 10px;
+}
+
+.selected {
+  color: var(--selectedColor);
+  transform: translate(.9em, -.19em);
+}
+
+// Animations
+
+.loop {
+  background: var(--hover-background-color);
+  color: var(--hover-color);
+  transform: translate(.9em, -.9em);
+  transition: all .25s linear;
+  box-shadow: -2em 2em 0 #e1e1e1;
+  animation: turner .4s infinite linear;
+}
+
+@keyframes turner{
+    from{  transform: rotateY(0deg)   }
+    to  {  transform: rotateY(360deg) }
 }
