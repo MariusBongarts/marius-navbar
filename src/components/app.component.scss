@@ -2,15 +2,13 @@
 :host {
   --skew-degree-x: 25deg;
   --skew-degree-y: 5deg;
-  --nav-item-padding: 100px;
   --background-color: #000;
   --color: #575757;
-  --hover-background-color: #ff6e42;
-  --hover-color: green;
+  --hover-background-color: #95DEE3;//#ff6e42;
+  --hover-color: #F2552C;
 }
 
 ul {
-  padding: var(--nav-item-padding, --nav-item-padding);
   position: relative;
   transform: skew(var(--skew-degree-x), var(--skew-degree-y))
 }
